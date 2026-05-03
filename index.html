@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خطوبة عبد الله & وفاء</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #d4af37; --bg-night: #050b1a; --overlay: rgba(5, 11, 26, 0.9); }
+        body { font-family: 'Cairo', sans-serif; background: var(--bg-night); color: white; margin: 0; overflow: hidden; height: 100vh; }
+
+        /* شريط حقوق التصميم الثابت */
+        .footer-credit {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            padding: 8px 0;
+            font-size: 0.85rem;
+            z-index: 4000; /* لضمان ظهوره فوق كل الطبقات */
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+            letter-spacing: 0.5px;
+        }
+        .footer-credit b { color: var(--gold); }
+
+        /* طبقة الباسورد */
+        #password-layer { 
+            position: fixed; inset: 0; z-index: 3000; 
+            background: var(--bg-night); 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            transition: opacity 0.8s ease, transform 1s ease;
+        }
+        .fade-out { opacity: 0 !important; pointer-events: none; transform: scale(1.05); }
+
+        .pass-input { 
+            background: rgba(255,255,255,0.05); border: 2px solid var(--gold); 
+            border-radius: 15px; color: white; padding: 12px; text-align: center; 
+            font-size: 1.2rem; outline: none; margin: 15px 0; width: 220px; 
+        }
+
+        /* تنسيق الصفحات */
+        .page { 
+            display: none; height: 100vh; width: 100%; text-align: center; 
+            padding: 20px 20px 60px 20px; /* زيادة الحشو السفلي لكي لا يغطي الشريط المحتوى */
+            box-sizing: border-box; overflow-y: auto; 
+            background: var(--overlay); position: absolute; inset: 0; 
+        }
+        .active { display: flex !important; flex-direction: column; align-items: center; justify-content: center; animation: fadeIn 1s forwards; }
+
+        /* شبكة الصور */
+        .photos-grid { display: grid; grid-template-columns: 1fr; gap: 15px; width: 90%; max-width: 320px; margin: 15px 0; }
+        .img-frame { 
+            width: 100%; height: 180px; border: 2px solid var(--gold); 
+            border-radius: 15px; overflow: hidden; box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); 
+        }
+        .img-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* العداد التنازلي */
+        #countdown { display: flex; gap: 8px; margin: 15px 0; justify-content: center; }
+        .time-box { border: 2px solid var(--gold); padding: 8px; border-radius: 12px; background: rgba(212, 175, 55, 0.1); min-width: 50px; }
+        .time-box span { display: block; font-size: 1.2rem; font-weight: bold; transition: 0.3s; }
+        .pulse-up { transform: scale(1.3); color: #fff; text-shadow: 0 0 10px var(--gold); }
+
+        .info-card { 
+            border: 2px solid var(--gold); padding: 15px; border-radius: 20px; 
+            background: rgba(255,255,255,0.05); width: 90%; max-width: 350px; 
+        }
+
+        .btn-main { 
+            background: transparent; color: var(--gold); padding: 10px 25px; 
+            border-radius: 30px; border: 2px solid var(--gold); cursor: pointer; 
+            margin: 10px; font-weight: bold; transition: 0.4s; text-decoration: none; display: inline-block;
+        }
+        .btn-main:hover { background: var(--gold); color: black; box-shadow: 0 0 15px var(--gold); }
+
+        .neon-text { font-family: 'Amiri', serif; font-size: 2.2rem; color: var(--gold); text-shadow: 0 0 10px var(--gold); margin: 10px 0; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        #stars-container { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+        .star { position: absolute; background: white; border-radius: 50%; opacity: 0.5; animation: twinkle 2s infinite ease-in-out; }
+    </style>
+</head>
+<body>
+
+<div class="footer-credit">
+    تم تصميم الموقع من خلال المهندس <b>إبراهيم سعد</b>
+</div>
+
+<audio id="bgMusic" loop preload="auto"><source src="wedding-song.mp3" type="audio/mpeg"></audio>
+<div id="stars-container"></div>
+
+<div id="password-layer">
+    <h2 style="color: var(--gold); font-family: 'Amiri'; font-size: 2.5rem;">دعوة خاصة ✨</h2>
+    <p>أدخل كلمة السر لفتح الدعوة</p>
+    <input type="password" id="passInput" class="pass-input" placeholder="كلمة السر">
+    <button class="btn-main" onclick="checkPassword()">دخول ✨</button>
+</div>
+
+<div id="page1" class="page">
+    <h2 class="neon-text">بداية حكايتنا</h2>
+    <div class="photos-grid">
+        <div class="img-frame"><img src="pic1.jpg"></div>
+        <div class="img-frame"><img src="pic2.jpg"></div>
+    </div>
+    <button class="btn-main" onclick="showPage('page2')">التالي ✨</button>
+</div>
+
+<div id="page2" class="page">
+    <h2 class="neon-text">لحظات لا تُنسى</h2>
+    <div class="photos-grid">
+        <div class="img-frame"><img src="pic3.jpg"></div>
+        <div class="img-frame"><img src="pic4.jpg"></div>
+    </div>
+    <button class="btn-main" onclick="showPage('page3')">التالي ✨</button>
+</div>
+
+<div id="page3" class="page">
+    <h2 class="neon-text">معاً دائماً</h2>
+    <div class="photos-grid">
+        <div class="img-frame"><img src="pic5.jpg"></div>
+        <div class="img-frame"><img src="pic6.jpg"></div>
+    </div>
+    <button class="btn-main" onclick="showPage('page4')">التالي ✨</button>
+</div>
+
+<div id="page4" class="page">
+    <h2 class="neon-text">سند العمر</h2>
+    <div class="photos-grid">
+        <div class="img-frame"><img src="pic7.jpg"></div>
+        <div class="img-frame"><img src="pic8.jpg"></div>
+    </div>
+    <button class="btn-main" onclick="showPage('finalPage')">موعدنا المنتظر 📍</button>
+</div>
+
+<div id="finalPage" class="page">
+    <h1 class="neon-text">عبد الله & وفاء</h1>
+    <div id="countdown">
+        <div class="time-box"><span id="days">0</span>يوم</div>
+        <div class="time-box"><span id="hours">0</span>ساعة</div>
+        <div class="time-box"><span id="mins">0</span>دقيقة</div>
+        <div class="time-box"><span id="secs">0</span>ثانية</div>
+    </div>
+    <div class="info-card">
+        <p style="font-size: 1.3rem; margin: 10px 0;">📅 الاثنين، 25 مايو 2026</p>
+        <p style="color: #ccc;">📍 دروه - عند بيت العروسة</p>
+        <a href="https://maps.google.com/?q=دروه" target="_blank" class="btn-main" style="border-color: #2ecc71; color: #2ecc71;">📍 الموقع على الخريطة</a>
+    </div>
+</div>
+
+<script>
+    function showPage(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+    }
+
+    function checkPassword() {
+        const pass = document.getElementById('passInput').value;
+        const music = document.getElementById('bgMusic');
+        const layer = document.getElementById('password-layer');
+        if(pass === "بحبك") {
+            music.play().catch(e => {});
+            layer.classList.add('fade-out');
+            setTimeout(() => {
+                layer.style.display = 'none';
+                showPage('page1');
+            }, 800);
+        } else { alert("الرمز غير صحيح ❤️"); }
+    }
+
+    function updateTimer() {
+        const target = new Date('May 25, 2026 18:00:00').getTime();
+        const now = new Date().getTime();
+        const diff = target - now;
+        if(diff > 0) {
+            const time = {
+                days: Math.floor(diff/(1000*60*60*24)),
+                hours: Math.floor((diff/(1000*60*60))%24),
+                mins: Math.floor((diff/1000/60)%60),
+                secs: Math.floor((diff/1000)%60)
+            };
+            for(let unit in time) {
+                const el = document.getElementById(unit);
+                if(el && el.innerText != time[unit]) {
+                    el.innerText = time[unit];
+                    el.classList.add('pulse-up');
+                    setTimeout(() => el.classList.remove('pulse-up'), 300);
+                }
+            }
+        }
+    }
+    setInterval(updateTimer, 1000);
+
+    const sCon = document.getElementById('stars-container');
+    for(let i=0; i<80; i++) {
+        let s = document.createElement('div'); s.className='star';
+        s.style.left=Math.random()*100+'%'; s.style.top=Math.random()*100+'%';
+        s.style.width=s.style.height=Math.random()*3+'px'; sCon.appendChild(s);
+    }
+</script>
+</body>
+</html>
