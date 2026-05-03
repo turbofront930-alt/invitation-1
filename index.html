@@ -12,18 +12,15 @@
         /* شريط حقوق التصميم الثابت */
         .footer-credit {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(5px);
+            bottom: 0; left: 0; right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
             color: rgba(255, 255, 255, 0.8);
             text-align: center;
-            padding: 8px 0;
+            padding: 10px 0;
             font-size: 0.85rem;
-            z-index: 4000; /* لضمان ظهوره فوق كل الطبقات */
+            z-index: 4000;
             border-top: 1px solid rgba(212, 175, 55, 0.3);
-            letter-spacing: 0.5px;
         }
         .footer-credit b { color: var(--gold); }
 
@@ -32,9 +29,9 @@
             position: fixed; inset: 0; z-index: 3000; 
             background: var(--bg-night); 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            transition: opacity 0.8s ease, transform 1s ease;
+            transition: opacity 0.8s ease;
         }
-        .fade-out { opacity: 0 !important; pointer-events: none; transform: scale(1.05); }
+        .fade-out { opacity: 0 !important; pointer-events: none; }
 
         .pass-input { 
             background: rgba(255,255,255,0.05); border: 2px solid var(--gold); 
@@ -45,7 +42,7 @@
         /* تنسيق الصفحات */
         .page { 
             display: none; height: 100vh; width: 100%; text-align: center; 
-            padding: 20px 20px 60px 20px; /* زيادة الحشو السفلي لكي لا يغطي الشريط المحتوى */
+            padding: 20px 20px 80px 20px;
             box-sizing: border-box; overflow-y: auto; 
             background: var(--overlay); position: absolute; inset: 0; 
         }
@@ -55,29 +52,27 @@
         .photos-grid { display: grid; grid-template-columns: 1fr; gap: 15px; width: 90%; max-width: 320px; margin: 15px 0; }
         .img-frame { 
             width: 100%; height: 180px; border: 2px solid var(--gold); 
-            border-radius: 15px; overflow: hidden; box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); 
+            border-radius: 15px; overflow: hidden; background: #111; /* لون مؤقت خلف الصورة */
         }
         .img-frame img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* العداد التنازلي */
-        #countdown { display: flex; gap: 8px; margin: 15px 0; justify-content: center; }
+        /* العداد */
+        #countdown { display: flex; gap: 8px; margin: 15px 0; }
         .time-box { border: 2px solid var(--gold); padding: 8px; border-radius: 12px; background: rgba(212, 175, 55, 0.1); min-width: 50px; }
-        .time-box span { display: block; font-size: 1.2rem; font-weight: bold; transition: 0.3s; }
-        .pulse-up { transform: scale(1.3); color: #fff; text-shadow: 0 0 10px var(--gold); }
-
-        .info-card { 
-            border: 2px solid var(--gold); padding: 15px; border-radius: 20px; 
-            background: rgba(255,255,255,0.05); width: 90%; max-width: 350px; 
-        }
+        .time-box span { display: block; font-size: 1.2rem; font-weight: bold; }
+        .pulse-up { transform: scale(1.2); color: #fff; text-shadow: 0 0 10px var(--gold); transition: 0.3s; }
 
         .btn-main { 
-            background: transparent; color: var(--gold); padding: 10px 25px; 
+            background: transparent; color: var(--gold); padding: 10px 20px; 
             border-radius: 30px; border: 2px solid var(--gold); cursor: pointer; 
-            margin: 10px; font-weight: bold; transition: 0.4s; text-decoration: none; display: inline-block;
+            margin: 5px; font-weight: bold; transition: 0.4s; text-decoration: none; display: inline-block;
+            font-size: 0.9rem;
         }
         .btn-main:hover { background: var(--gold); color: black; box-shadow: 0 0 15px var(--gold); }
+        .btn-confirm { background: #25d366; color: white; border-color: #25d366; } /* لون واتساب */
+        .btn-confirm:hover { background: #128c7e; color: white; border-color: #128c7e; }
 
-        .neon-text { font-family: 'Amiri', serif; font-size: 2.2rem; color: var(--gold); text-shadow: 0 0 10px var(--gold); margin: 10px 0; }
+        .neon-text { font-family: 'Amiri', serif; font-size: 2rem; color: var(--gold); text-shadow: 0 0 10px var(--gold); margin: 10px 0; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         #stars-container { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
         .star { position: absolute; background: white; border-radius: 50%; opacity: 0.5; animation: twinkle 2s infinite ease-in-out; }
@@ -93,8 +88,7 @@
 <div id="stars-container"></div>
 
 <div id="password-layer">
-    <h2 style="color: var(--gold); font-family: 'Amiri'; font-size: 2.5rem;">دعوة خاصة ✨</h2>
-    <p>أدخل كلمة السر لفتح الدعوة</p>
+    <h2 style="color: var(--gold); font-family: 'Amiri'; font-size: 2.2rem;">دعوة خاصة ✨</h2>
     <input type="password" id="passInput" class="pass-input" placeholder="كلمة السر">
     <button class="btn-main" onclick="checkPassword()">دخول ✨</button>
 </div>
@@ -102,8 +96,8 @@
 <div id="page1" class="page">
     <h2 class="neon-text">بداية حكايتنا</h2>
     <div class="photos-grid">
-        <div class="img-frame"><img src="pic1.jpg"></div>
-        <div class="img-frame"><img src="pic2.jpg"></div>
+        <div class="img-frame"><img src="pic1.jpg" alt="صورة 1"></div>
+        <div class="img-frame"><img src="pic2.jpg" alt="صورة 2"></div>
     </div>
     <button class="btn-main" onclick="showPage('page2')">التالي ✨</button>
 </div>
@@ -111,8 +105,8 @@
 <div id="page2" class="page">
     <h2 class="neon-text">لحظات لا تُنسى</h2>
     <div class="photos-grid">
-        <div class="img-frame"><img src="pic3.jpg"></div>
-        <div class="img-frame"><img src="pic4.jpg"></div>
+        <div class="img-frame"><img src="pic3.jpg" alt="صورة 3"></div>
+        <div class="img-frame"><img src="pic4.jpg" alt="صورة 4"></div>
     </div>
     <button class="btn-main" onclick="showPage('page3')">التالي ✨</button>
 </div>
@@ -120,8 +114,8 @@
 <div id="page3" class="page">
     <h2 class="neon-text">معاً دائماً</h2>
     <div class="photos-grid">
-        <div class="img-frame"><img src="pic5.jpg"></div>
-        <div class="img-frame"><img src="pic6.jpg"></div>
+        <div class="img-frame"><img src="pic5.jpg" alt="صورة 5"></div>
+        <div class="img-frame"><img src="pic6.jpg" alt="صورة 6"></div>
     </div>
     <button class="btn-main" onclick="showPage('page4')">التالي ✨</button>
 </div>
@@ -129,10 +123,10 @@
 <div id="page4" class="page">
     <h2 class="neon-text">سند العمر</h2>
     <div class="photos-grid">
-        <div class="img-frame"><img src="pic7.jpg"></div>
-        <div class="img-frame"><img src="pic8.jpg"></div>
+        <div class="img-frame"><img src="pic7.jpg" alt="صورة 7"></div>
+        <div class="img-frame"><img src="pic8.jpg" alt="صورة 8"></div>
     </div>
-    <button class="btn-main" onclick="showPage('finalPage')">موعدنا المنتظر 📍</button>
+    <button class="btn-main" onclick="showPage('finalPage')">الموعد والتأكيد 📍</button>
 </div>
 
 <div id="finalPage" class="page">
@@ -143,37 +137,36 @@
         <div class="time-box"><span id="mins">0</span>دقيقة</div>
         <div class="time-box"><span id="secs">0</span>ثانية</div>
     </div>
-    <div class="info-card">
-        <p style="font-size: 1.3rem; margin: 10px 0;">📅 الاثنين، 25 مايو 2026</p>
-        <p style="color: #ccc;">📍 دروه - عند بيت العروسة</p>
-        <a href="https://maps.google.com/?q=دروه" target="_blank" class="btn-main" style="border-color: #2ecc71; color: #2ecc71;">📍 الموقع على الخريطة</a>
+    <div style="border: 1px solid var(--gold); padding: 15px; border-radius: 20px; background: rgba(255,255,255,0.05); width: 95%; max-width: 350px;">
+        <p style="font-size: 1.1rem; margin: 5px 0;">📅 الاثنين، 25 مايو 2026</p>
+        <p style="color: #ccc; font-size: 0.9rem;">📍 دروه - عند بيت العروسة</p>
+        <hr style="border:0; border-top:1px solid rgba(212,175,55,0.2); margin:10px 0;">
+        
+        <a href="https://wa.me/201101475409?text=تم+تأكيد+حضور+الفرح+بإذن+الله..+ألف+مبروك!" target="_blank" class="btn-main btn-confirm">✅ تأكيد الحضور (واتساب)</a>
+        <br>
+        <a href="https://maps.google.com/?q=دروه" target="_blank" class="btn-main">📍 موقع العرس</a>
     </div>
 </div>
 
 <script>
-    function showPage(pageId) {
+    function showPage(pId) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById(pageId).classList.add('active');
+        document.getElementById(pId).classList.add('active');
     }
 
     function checkPassword() {
-        const pass = document.getElementById('passInput').value;
-        const music = document.getElementById('bgMusic');
-        const layer = document.getElementById('password-layer');
-        if(pass === "بحبك") {
-            music.play().catch(e => {});
-            layer.classList.add('fade-out');
+        if(document.getElementById('passInput').value === "بحبك") {
+            document.getElementById('bgMusic').play().catch(e=>{});
+            document.getElementById('password-layer').classList.add('fade-out');
             setTimeout(() => {
-                layer.style.display = 'none';
+                document.getElementById('password-layer').style.display='none';
                 showPage('page1');
             }, 800);
-        } else { alert("الرمز غير صحيح ❤️"); }
+        } else { alert("الرمز خطأ ❤️"); }
     }
 
     function updateTimer() {
-        const target = new Date('May 25, 2026 18:00:00').getTime();
-        const now = new Date().getTime();
-        const diff = target - now;
+        const diff = new Date('May 25, 2026 18:00:00') - new Date();
         if(diff > 0) {
             const time = {
                 days: Math.floor(diff/(1000*60*60*24)),
@@ -181,10 +174,10 @@
                 mins: Math.floor((diff/1000/60)%60),
                 secs: Math.floor((diff/1000)%60)
             };
-            for(let unit in time) {
-                const el = document.getElementById(unit);
-                if(el && el.innerText != time[unit]) {
-                    el.innerText = time[unit];
+            for(let key in time) {
+                const el = document.getElementById(key);
+                if(el && el.innerText != time[key]) {
+                    el.innerText = time[key];
                     el.classList.add('pulse-up');
                     setTimeout(() => el.classList.remove('pulse-up'), 300);
                 }
@@ -194,10 +187,10 @@
     setInterval(updateTimer, 1000);
 
     const sCon = document.getElementById('stars-container');
-    for(let i=0; i<80; i++) {
+    for(let i=0; i<60; i++) {
         let s = document.createElement('div'); s.className='star';
         s.style.left=Math.random()*100+'%'; s.style.top=Math.random()*100+'%';
-        s.style.width=s.style.height=Math.random()*3+'px'; sCon.appendChild(s);
+        s.style.width=s.style.height=Math.random()*2+'px'; sCon.appendChild(s);
     }
 </script>
 </body>
